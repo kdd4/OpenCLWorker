@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 if (NOT CMAKE_CXX_COMPILER_ID)
 	message(WARNING "CMAKE_CXX_COMPILER_ID is not defined")
-	set(CMAKE_CXX_COMPILER_ID "GCC" CACHE STRING "Enter compiler id" FORCE)
+	set(CMAKE_CXX_COMPILER_ID "" CACHE STRING "Enter compiler id" FORCE)
 	
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "GCC" OR CMAKE_CXX_COMPILER_ID MATCHES "CLANG")
 	set(CMAKE_CXX_FLAGS "-Wall -Wpedantic")
@@ -29,11 +29,11 @@ add_library(OpenCLWorker STATIC ${HEADERS} ${SOURCES})
 target_include_directories(OpenCLWorker PUBLIC include)
 
 find_package(	OpenCL CONFIG REQUIRED
-				PATHS ${CMAKE_SOURCE_DIR}/extlib
+				PATHS "${CMAKE_SOURCE_DIR}/extlib"
 			)
 				
 target_link_libraries(	OpenCLWorker
-						PRIVATE
+						PUBLIC
 						OpenCL::OpenCL
 						OpenCL::Headers
 						OpenCL::HeadersCpp

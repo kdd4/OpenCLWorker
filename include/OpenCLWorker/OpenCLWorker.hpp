@@ -6,8 +6,9 @@
 class OpenCLWorker
 {
 public:
-	OpenCLWorker& getInstance();
+	static OpenCLWorker& getInstance();
 
 private:
+	static OpenCLWorker* instance;
 	OpenCLWorker();
 };
