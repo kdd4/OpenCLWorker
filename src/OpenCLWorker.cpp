@@ -38,6 +38,12 @@ namespace OpenCLWorker
 		return _platforms[default_platform].devices[default_device].command_queue;
 	}
 
+	void OpenCLWorker::setDefault(int platform, int device)
+	{
+		default_platform = platform;
+		default_device = device;
+	}
+
 	OpenCLWorker::OpenCLWorker() : default_platform(0), default_device(0)
 	{
 		std::vector<cl::Platform> ocl_platforms;

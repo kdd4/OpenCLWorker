@@ -34,6 +34,8 @@ namespace OpenCLWorker
 		cl::Device& getDevice();
 		cl::CommandQueue& getCommandQueue();
 
+		void setDefault(int platform, int device);
+
 	private:
 		OpenCLWorker();
 
