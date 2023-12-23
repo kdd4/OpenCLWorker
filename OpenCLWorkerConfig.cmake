@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(OpenCLWorker CXX)
-
 file(GLOB_RECURSE HEADERS include/OpenCLWorker/*.hpp)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
