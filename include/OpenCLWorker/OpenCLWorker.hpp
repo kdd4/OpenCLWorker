@@ -28,6 +28,11 @@ namespace OpenCLWorker
 		static OpenCLWorker& Instance();
 
 		std::vector<Platform>& getPlatforms();
+		
+		cl::Platform& getPlatform();
+		cl::Context& getContext();
+		cl::Device& getDevice();
+		cl::CommandQueue& getCommandQueue();
 
 	private:
 		OpenCLWorker();
@@ -35,5 +40,7 @@ namespace OpenCLWorker
 		static OpenCLWorker* _instance;
 
 		std::vector<Platform> _platforms;
+		int default_platform;
+		int default_device;
 	};
 }

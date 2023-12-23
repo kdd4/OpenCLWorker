@@ -18,7 +18,27 @@ namespace OpenCLWorker
 		return _platforms;
 	}
 
-	OpenCLWorker::OpenCLWorker()
+	cl::Platform& OpenCLWorker::getPlatform()
+	{
+		return _platforms[default_platform].platform;
+	}
+
+	cl::Context& OpenCLWorker::getContext()
+	{
+		return _platforms[default_platform].context;
+	}
+
+	cl::Device& OpenCLWorker::getDevice()
+	{
+		return _platforms[default_platform].devices[default_device].device;
+	}
+
+	cl::CommandQueue& OpenCLWorker::getCommandQueue()
+	{
+		return _platforms[default_platform].devices[default_device].command_queue;
+	}
+
+	OpenCLWorker::OpenCLWorker() : default_platform(0), default_device(0)
 	{
 		std::vector<cl::Platform> ocl_platforms;
 		cl::Platform::get(&ocl_platforms);
