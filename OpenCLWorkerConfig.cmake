@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.21)
 
-file(GLOB_RECURSE HEADERS include/OpenCLWorker/*.hpp)
-file(GLOB_RECURSE SOURCES src/*.cpp)
+get_filename_component(SOURCES_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
+
+file(GLOB_RECURSE HEADERS ${SOURCES_DIR}/include/OpenCLWorker/*.hpp)
+file(GLOB_RECURSE SOURCES ${SOURCES_DIR}/src/*.cpp)
 
 add_library(OpenCLWorker STATIC ${HEADERS} ${SOURCES})
 
-target_include_directories(OpenCLWorker PUBLIC include)
+target_include_directories(OpenCLWorker PUBLIC ${SOURCES_DIR}/include)
 
 find_package(OpenCL CONFIG REQUIRED)
 				
