@@ -27,7 +27,7 @@ namespace OpenCLWorker
 	public:
 		static OpenCLWorker& Instance();
 
-		const std::vector<Platform>& getPlatforms() const;
+		std::vector<Platform>& getPlatforms();
 
 	private:
 		OpenCLWorker();

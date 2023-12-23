@@ -13,7 +13,7 @@ namespace OpenCLWorker
 		return *_instance;
 	}
 
-	const std::vector<Platform>& OpenCLWorker::getPlatforms() const
+	std::vector<Platform>& OpenCLWorker::getPlatforms()
 	{
 		return _platforms;
 	}
