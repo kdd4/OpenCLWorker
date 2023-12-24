@@ -11,14 +11,14 @@ namespace OpenCLWorker
 {
 	struct Device
 	{
-		cl::Device device;
-		cl::CommandQueue command_queue;
+		cl::Device ocl_device;
+		cl::CommandQueue ocl_command_queue;
 	};
 
 	struct Platform
 	{
-		cl::Platform platform;
-		cl::Context context;
+		cl::Platform ocl_platform;
+		cl::Context ocl_context;
 		std::vector<Device> devices;
 	};
 
@@ -28,21 +28,21 @@ namespace OpenCLWorker
 		static OpenCLWorker& Instance();
 
 		std::vector<Platform>& getPlatforms();
+
+		void setDefault(int platform_id, int device_id);
 		
 		cl::Platform& getPlatform();
 		cl::Context& getContext();
 		cl::Device& getDevice();
 		cl::CommandQueue& getCommandQueue();
 
-		void setDefault(int platform, int device);
-
 	private:
 		OpenCLWorker();
 
-		static OpenCLWorker* _instance;
+		static OpenCLWorker* instance;
 
-		std::vector<Platform> _platforms;
-		int default_platform;
-		int default_device;
+		std::vector<Platform> platforms;
+		int default_platform_id;
+		int default_device_id;
 	};
 }

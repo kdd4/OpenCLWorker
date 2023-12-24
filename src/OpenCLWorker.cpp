@@ -2,71 +2,71 @@
 
 namespace OpenCLWorker
 {
-	OpenCLWorker* OpenCLWorker::_instance = NULL;
+	OpenCLWorker* OpenCLWorker::instance = NULL;
 
 	OpenCLWorker& OpenCLWorker::Instance()
 	{
-		if (_instance == NULL)
+		if (instance == NULL)
 		{
-			_instance = new OpenCLWorker();
+			instance = new OpenCLWorker();
 		}
-		return *_instance;
+		return *instance;
 	}
 
 	std::vector<Platform>& OpenCLWorker::getPlatforms()
 	{
-		return _platforms;
+		return platforms;
+	}
+
+	void OpenCLWorker::setDefault(int platform_id, int device_id)
+	{
+		default_platform_id = platform_id;
+		default_device_id = device_id;
 	}
 
 	cl::Platform& OpenCLWorker::getPlatform()
 	{
-		return _platforms[default_platform].platform;
+		return platforms[default_platform_id].ocl_platform;
 	}
 
 	cl::Context& OpenCLWorker::getContext()
 	{
-		return _platforms[default_platform].context;
+		return platforms[default_platform_id].ocl_context;
 	}
 
 	cl::Device& OpenCLWorker::getDevice()
 	{
-		return _platforms[default_platform].devices[default_device].device;
+		return platforms[default_platform_id].devices[default_device_id].ocl_device;
 	}
 
 	cl::CommandQueue& OpenCLWorker::getCommandQueue()
 	{
-		return _platforms[default_platform].devices[default_device].command_queue;
+		return platforms[default_platform_id].devices[default_device_id].ocl_command_queue;
 	}
 
-	void OpenCLWorker::setDefault(int platform, int device)
-	{
-		default_platform = platform;
-		default_device = device;
-	}
-
-	OpenCLWorker::OpenCLWorker() : default_platform(0), default_device(0)
+	OpenCLWorker::OpenCLWorker() : default_platform_id(0), default_device_id(0)
 	{
 		std::vector<cl::Platform> ocl_platforms;
-		cl::Platform::get(&ocl_platforms);
+		cl::Platform::get(&ocl_platforms);			// Getting a vector of platforms
 
 		for (cl::Platform& ocl_platform : ocl_platforms)
 		{
-			_platforms.push_back(Platform());
-			Platform& platform = _platforms.back();
+			platforms.push_back(Platform());		// Push back a new Platform
+			Platform& platform = platforms.back();
 
 			std::vector<cl::Device> ocl_devices;
-			ocl_platform.getDevices(CL_DEVICE_TYPE_ALL, &ocl_devices);
+			ocl_platform.getDevices(CL_DEVICE_TYPE_ALL, &ocl_devices);	// Getting a vector of devices
 
-			platform.platform = ocl_platform;
-			platform.context = cl::Context(ocl_devices);
+			platform.ocl_platform = ocl_platform;
+			platform.ocl_context = cl::Context(ocl_devices);
 			
 			for (cl::Device ocl_device : ocl_devices)
 			{
-				platform.devices.push_back(Device());
+				platform.devices.push_back(Device());		// Push back a new Device
 				Device& device = platform.devices.back();
 
-				device.device = ocl_device;
-				device.command_queue = cl::CommandQueue(platform.context, device.device);
+				device.ocl_device = ocl_device;
+				device.ocl_command_queue = cl::CommandQueue(platform.ocl_context, device.ocl_device);
 			}
 		}
 	}
