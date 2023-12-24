@@ -3,6 +3,9 @@
 #include <CL/opencl.hpp>
 #include <map>
 #include <string>
+#include <exception>
+
+#include "PlatformManager.hpp"
 
 namespace OpenCLWorker
 {
@@ -11,11 +14,11 @@ namespace OpenCLWorker
 	public:
 		static ProgramManager& Instance();
 
-		void addProgram(std::string& path, bool prebuilt = true);
-		void addProgram(std::vector<std::string>& paths, bool prebuilt = true);
+		void addProgram(const char* program_name, const char* source);
+		void addProgram(const char* program_name, cl::Program program);
 
-		cl::Program getProgram(std::string& path);
-		cl::Kernel getKernel(std::string& path, std::string& name);
+		cl::Program getProgram(const char* program_name);
+		cl::Kernel getKernel(const char* program_name, const char* kernel_name);
 
 	private:
 		ProgramManager();
