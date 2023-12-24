@@ -1,50 +1,50 @@
-#include "OpenCLWorker/OpenCLWorker.hpp"
+#include "OpenCLWorker/PlatformManager.hpp"
 
 namespace OpenCLWorker
 {
-	OpenCLWorker* OpenCLWorker::instance = NULL;
+	PlatformManager* PlatformManager::instance = NULL;
 
-	OpenCLWorker& OpenCLWorker::Instance()
+	PlatformManager& PlatformManager::Instance()
 	{
 		if (instance == NULL)
 		{
-			instance = new OpenCLWorker();
+			instance = new PlatformManager();
 		}
 		return *instance;
 	}
 
-	std::vector<Platform>& OpenCLWorker::getPlatforms()
+	std::vector<Platform>& PlatformManager::getPlatforms()
 	{
 		return platforms;
 	}
 
-	void OpenCLWorker::setDefault(int platform_id, int device_id)
+	void PlatformManager::setDefault(int platform_id, int device_id)
 	{
 		default_platform_id = platform_id;
 		default_device_id = device_id;
 	}
 
-	cl::Platform& OpenCLWorker::getPlatform()
+	cl::Platform& PlatformManager::getPlatform()
 	{
 		return platforms[default_platform_id].ocl_platform;
 	}
 
-	cl::Context& OpenCLWorker::getContext()
+	cl::Context& PlatformManager::getContext()
 	{
 		return platforms[default_platform_id].ocl_context;
 	}
 
-	cl::Device& OpenCLWorker::getDevice()
+	cl::Device& PlatformManager::getDevice()
 	{
 		return platforms[default_platform_id].devices[default_device_id].ocl_device;
 	}
 
-	cl::CommandQueue& OpenCLWorker::getCommandQueue()
+	cl::CommandQueue& PlatformManager::getCommandQueue()
 	{
 		return platforms[default_platform_id].devices[default_device_id].ocl_command_queue;
 	}
 
-	OpenCLWorker::OpenCLWorker() : default_platform_id(0), default_device_id(0)
+	PlatformManager::PlatformManager() : default_platform_id(0), default_device_id(0)
 	{
 		std::vector<cl::Platform> ocl_platforms;
 		cl::Platform::get(&ocl_platforms);			// Getting a vector of platforms

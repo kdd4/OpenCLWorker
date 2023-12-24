@@ -22,10 +22,10 @@ namespace OpenCLWorker
 		std::vector<Device> devices;
 	};
 
-	class OpenCLWorker
+	class PlatformManager
 	{
 	public:
-		static OpenCLWorker& Instance();
+		static PlatformManager& Instance();
 
 		std::vector<Platform>& getPlatforms();
 
@@ -37,9 +37,9 @@ namespace OpenCLWorker
 		cl::CommandQueue& getCommandQueue();
 
 	private:
-		OpenCLWorker();
+		PlatformManager();
 
-		static OpenCLWorker* instance;
+		static PlatformManager* instance;
 
 		std::vector<Platform> platforms;
 		int default_platform_id;
