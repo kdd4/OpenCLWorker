@@ -9,7 +9,11 @@ add_library(OpenCLWorker STATIC ${HEADERS} ${SOURCES})
 
 target_include_directories(OpenCLWorker PUBLIC ${SOURCES_DIR}/include)
 
-find_package(OpenCL CONFIG REQUIRED)
+if (NOT OpenCL_DIR)
+	find_package(	OpenCL CONFIG REQUIRED
+					PATHS ${CMAKE_SOURCE_DIR}/extlib
+				)
+endif()
 				
 target_link_libraries(	OpenCLWorker
 						PRIVATE
