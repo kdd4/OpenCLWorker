@@ -1,10 +1,10 @@
 #pragma once
 
-#include "OpenCLWorker/Programs.hpp"
+#include "OpenCLWorker/ProgramLoader.hpp"
 
 namespace OpenCLWorker
 {
-	class ProgramManager : public Programs
+	class ProgramManager : public ProgramLoader
 	{
 	public:
 		static ProgramManager& Instance();
