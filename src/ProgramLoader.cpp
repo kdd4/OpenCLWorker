@@ -6,7 +6,7 @@ namespace OpenCLWorker
 	std::string ProgramLoader::binary_dir;
 	const std::string ProgramLoader::default_binary_dir = "tmp";
 
-	void ProgramLoader::addProgram(std::string program_name, std::string source)
+	void ProgramLoader::addProgram(const std::string& program_name, const std::string& source)
 	{
 		size_t hash = std::hash<std::string>{}(source);
 
@@ -39,6 +39,22 @@ namespace OpenCLWorker
 		}
 
 		programs.insert(std::make_pair(program_name, program));
+	}
+
+	void ProgramLoader::addProgramFromFile(const std::string& program_name, const std::string& path)
+	{
+		std::string source;
+		std::ifstream source_file(path, std::ios::binary);
+
+		if (!source_file.is_open())
+		{
+			throw std::logic_error("Error opening the file");
+		}
+
+		std::ostringstream stream_source;
+		stream_source << source_file.rdbuf();
+
+		addProgram(program_name, stream_source.str());
 	}
 
 	cl::Program ProgramLoader::getProgram(std::string program_name)

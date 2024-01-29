@@ -3,6 +3,7 @@
 #include <CL/opencl.hpp>
 
 #include <mutex>
+#include <sstream>
 #include <filesystem>
 #include <fstream>
 #include <map>
@@ -14,7 +15,8 @@ namespace OpenCLWorker
 	class ProgramLoader
 	{
 	public:
-		void addProgram(std::string program_name, std::string source);
+		void addProgram(const std::string& program_name, const std::string& source);
+		void addProgramFromFile(const std::string& program_name, const std::string& path);
 
 		cl::Program getProgram(std::string program_name);
 		cl::Kernel getKernel(std::string program_name, std::string kernel_name);
