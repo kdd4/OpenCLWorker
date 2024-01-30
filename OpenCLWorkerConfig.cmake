@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
 get_filename_component(SOURCES_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
 
 file(GLOB_RECURSE HEADERS ${SOURCES_DIR}/include/OpenCLWorker/*.hpp)
@@ -11,6 +8,12 @@ file(GLOB_RECURSE SOURCES ${SOURCES_DIR}/src/*.cpp)
 add_library(OpenCLWorker STATIC ${HEADERS} ${SOURCES})
 
 target_include_directories(OpenCLWorker PUBLIC ${SOURCES_DIR}/include)
+
+set_target_properties(OpenCLWorker PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
 
 if (NOT OpenCL_DIR)
 	find_package(	OpenCL CONFIG REQUIRED

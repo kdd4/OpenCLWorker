@@ -33,7 +33,7 @@ namespace OpenCLWorker
 
 			if (err != CL_SUCCESS)
 			{
-				throw std::logic_error("OpenCL Program's init failed");
+				throw std::logic_error(program.getBuildInfo<CL_PROGRAM_BUILD_LOG>()[0].second.c_str());
 			}
 			saveBinaries(bin_path, program.getInfo<CL_PROGRAM_BINARIES>());
 		}
